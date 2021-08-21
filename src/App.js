@@ -1,5 +1,8 @@
 import React from "react";
 import { Typography, AppBar } from "@material-ui/core";
+import Notifications from "./components/Notifications";
+import Options from "./components/Options";
+import VideoPlayer from "./components/VideoPlayer";
 
 const App = () => {
   return (
@@ -10,7 +13,11 @@ const App = () => {
         </Typography>
       </AppBar>
       {/* Video Player */}
+      <VideoPlayer />
       {/* Options > Notifications */}
+      <Options>
+        <Notifications />
+      </Options>
     </div>
   );
 };
