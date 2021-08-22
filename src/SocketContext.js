@@ -8,12 +8,12 @@ const SocketContext = createContext();
 const socket = io("http://localhost:5000");
 
 const ContextProvider = ({ children }) => {
-  const [stream, setStream] = useState(null);
-  const [me, setMe] = useState("");
-  const [call, setCall] = useState({});
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
+  const [stream, setStream] = useState();
   const [name, setName] = useState("");
+  const [call, setCall] = useState({});
+  const [me, setMe] = useState("");
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -37,8 +37,8 @@ const ContextProvider = ({ children }) => {
     socket.on("me", (id) => setMe(id));
 
     // Listens for call(whether calling or recieving), data returned is saved to "call" state
-    socket.on("calluser", ({ from, name: callerName, signal }) => {
-      setCall({ isRecievedCall: true, from, name: callerName, signal });
+    socket.on("callUser", ({ from, name: callerName, signal }) => {
+      setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
   }, []);
 
@@ -49,7 +49,7 @@ const ContextProvider = ({ children }) => {
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
-      socket.emit("answercall", { signal: data, to: call.from });
+      socket.emit("answerCall", { signal: data, to: call.from });
     });
 
     peer.on("stream", (currentStream) => {
@@ -66,7 +66,7 @@ const ContextProvider = ({ children }) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on("signal", (data) => {
-      socket.emit("calluser", {
+      socket.emit("callUser", {
         userToCall: id,
         signalData: data,
         from: me,
@@ -78,7 +78,7 @@ const ContextProvider = ({ children }) => {
       userVideo.current.srcObject = currentStream;
     });
 
-    socket.on("callaccepted", (signal) => {
+    socket.on("callAccepted", (signal) => {
       setCallAccepted(true);
 
       peer.signal(signal);

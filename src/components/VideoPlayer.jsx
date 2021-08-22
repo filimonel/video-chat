@@ -49,7 +49,6 @@ const VideoPlayer = () => {
           </Grid>
         </Paper>
       )}
-
       {/* User Video */}
       {/* if call accepted and not ended show user video */}
       {callAccepted && !callEnded && (
@@ -61,7 +60,7 @@ const VideoPlayer = () => {
             <video
               playsInline
               ref={userVideo}
-              autoplay
+              autoPlay
               className={classes.video}
             />
           </Grid>
