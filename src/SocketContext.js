@@ -5,7 +5,7 @@ import Peer from "simple-peer";
 // SocketContext will allow all components to access values
 const SocketContext = createContext();
 
-const socket = io("http://localhost:5000");
+const socket = io("https://milkman-chat.herokuapp.com/");
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
