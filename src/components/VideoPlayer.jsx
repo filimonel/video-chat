@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: "10px",
-    border: "2px solid black",
     margin: "10px",
+    background: "whiteSmoke",
   },
 }));
 
@@ -40,8 +40,8 @@ const VideoPlayer = () => {
               {name || "Me"}
             </Typography>
             <video
-              playsInline
               muted
+              playsInline
               ref={myVideo}
               autoPlay
               className={classes.video}
@@ -52,15 +52,15 @@ const VideoPlayer = () => {
       {/* User Video */}
       {/* if call accepted and not ended show user video */}
       {callAccepted && !callEnded && (
-        <Paper>
+        <Paper className={classes.paper}>
           <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom>
               {call.name || "Name"}
             </Typography>
             <video
               playsInline
-              ref={userVideo}
               autoPlay
+              ref={userVideo}
               className={classes.video}
             />
           </Grid>
